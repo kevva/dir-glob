@@ -1,0 +1,35 @@
+{
+  "name": "dir-glob",
+  "version": "0.0.0",
+  "description": "Convert directories to glob compatible strings",
+  "license": "MIT",
+  "repository": "kevva/dir-glob",
+  "author": {
+    "name": "Kevin Martensson",
+    "email": "kevinmartensson@gmail.com",
+    "url": "github.com/kevva"
+  },
+  "engines": {
+    "node": ">=0.10.0"
+  },
+  "scripts": {
+    "test": "xo && ava"
+  },
+  "files": [
+    "index.js"
+  ],
+  "keywords": [
+    ""
+  ],
+  "dependencies": {
+    "arrify": "^1.0.1",
+    "pify": "^2.3.0",
+    "pinkie-promise": "^2.0.0"
+  },
+  "devDependencies": {
+    "ava": "*",
+    "mkdirp": "^0.5.1",
+    "rimraf": "^2.5.0",
+    "xo": "*"
+  }
+}
