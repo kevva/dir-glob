@@ -20,14 +20,14 @@ dirGlob(['index.js', 'test.js', 'fixtures']).then(files => {
 	//=> ['index.js', 'test.js', 'fixtures/**']
 });
 
-dirGlob(['fixtures'], {ext: 'js'}).then(files => {
+dirGlob(['lib/**', 'fixtures'], {ext: 'js'}).then(files => {
 	console.log(files);
-	//=> ['fixtures/**/*.js']
+	//=> ['lib/**', 'fixtures/**/*.js']
 });
 
-dirGlob(['fixtures'], {ext: ['js', 'png']}).then(files => {
+dirGlob(['lib/**', 'fixtures'], {ext: ['js', 'png']}).then(files => {
 	console.log(files);
-	//=> ['fixtures/**/*.{js,png}']
+	//=> ['lib/**', 'fixtures/**/*.{js,png}']
 });
 ```
 

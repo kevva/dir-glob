@@ -21,6 +21,12 @@ module.exports = function (input, opts) {
 			}
 
 			return el;
+		}).catch(function (err) {
+			if (err.code === 'ENOENT') {
+				return el;
+			}
+
+			throw err;
 		});
 	}));
 };
@@ -35,12 +41,20 @@ module.exports.sync = function (input, opts) {
 	}
 
 	return input.map(function (el) {
-		var stats = fs.statSync(el);
+		try {
+			var stats = fs.statSync(el);
 
-		if (stats.isDirectory()) {
-			return path.join(el, '**', opts.ext || '');
+			if (stats.isDirectory()) {
+				return path.join(el, '**', opts.ext || '');
+			}
+
+			return el;
+		} catch (err) {
+			if (err.code === 'ENOENT') {
+				return el;
+			}
+
+			throw err;
 		}
-
-		return el;
 	});
 };
