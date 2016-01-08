@@ -15,7 +15,7 @@ module.exports = function (input, opts) {
 	}
 
 	return Promise.all(arrify(input).map(function (el) {
-		return pify(fs.stat, Promise)(el).then(function (stats) {
+		return pify(fs.stat, Promise)(el[0] === '!' ? el.substring(1) : el).then(function (stats) {
 			if (stats.isDirectory()) {
 				return path.join(el, '**', opts.ext || '');
 			}
@@ -42,7 +42,7 @@ module.exports.sync = function (input, opts) {
 
 	return input.map(function (el) {
 		try {
-			var stats = fs.statSync(el);
+			var stats = fs.statSync(el[0] === '!' ? el.substring(1) : el);
 
 			if (stats.isDirectory()) {
 				return path.join(el, '**', opts.ext || '');
