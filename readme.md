@@ -54,7 +54,7 @@ Append extension to the end of your glob.
 
 ### dirGlob.sync(input, [options])
 
-Returns a promise for an array of glob strings.
+Returns an array of glob strings.
 
 #### input
 
