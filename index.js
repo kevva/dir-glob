@@ -1,29 +1,28 @@
 'use strict';
-var fs = require('fs');
-var path = require('path');
-var arrify = require('arrify');
-var pify = require('pify');
-var Promise = require('pinkie-promise');
+const fs = require('fs');
+const path = require('path');
+const arrify = require('arrify');
+const pify = require('pify');
 
-module.exports = function (input, opts) {
+module.exports = (input, opts) => {
 	opts = opts || {};
 
 	if (Array.isArray(opts.ext)) {
-		opts.ext = '*.{' + opts.ext.join(',') + '}';
+		opts.ext = `*.{${opts.ext.join(',')}}`;
 	} else if (opts.ext) {
-		opts.ext = '*.' + opts.ext;
+		opts.ext = `*.${opts.ext}`;
 	}
 
-	return Promise.all(arrify(input).map(function (el) {
-		return pify(fs.stat, Promise)(el[0] === '!' ? el.substring(1) : el).then(function (stats) {
+	return Promise.all(arrify(input).map(x => {
+		return pify(fs.stat)(x[0] === '!' ? x.substring(1) : x).then(stats => {
 			if (stats.isDirectory()) {
-				return path.join(el, '**', opts.ext || '');
+				return path.join(x, '**', opts.ext || '');
 			}
 
-			return el;
-		}).catch(function (err) {
+			return x;
+		}).catch(err => {
 			if (err.code === 'ENOENT') {
-				return el;
+				return x;
 			}
 
 			throw err;
@@ -35,23 +34,23 @@ module.exports.sync = function (input, opts) {
 	opts = opts || {};
 
 	if (Array.isArray(opts.ext)) {
-		opts.ext = '*.{' + opts.ext.join(',') + '}';
+		opts.ext = `*.{${opts.ext.join(',')}}`;
 	} else if (opts.ext) {
-		opts.ext = '*.' + opts.ext;
+		opts.ext = `*.${opts.ext}`;
 	}
 
-	return input.map(function (el) {
+	return input.map(x => {
 		try {
-			var stats = fs.statSync(el[0] === '!' ? el.substring(1) : el);
+			const stats = fs.statSync(x[0] === '!' ? x.substring(1) : x);
 
 			if (stats.isDirectory()) {
-				return path.join(el, '**', opts.ext || '');
+				return path.join(x, '**', opts.ext || '');
 			}
 
-			return el;
+			return x;
 		} catch (err) {
 			if (err.code === 'ENOENT') {
-				return el;
+				return x;
 			}
 
 			throw err;
