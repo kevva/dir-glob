@@ -66,7 +66,7 @@ A `string` or an `array` of paths.
 
 ##### ext
 
-Type: `array` , `string`
+Type: `array`, `string`
 
 Append extension to the end of your glob.
 

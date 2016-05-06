@@ -19,7 +19,9 @@
     "index.js"
   ],
   "keywords": [
-    ""
+    "convert",
+    "directory",
+    "glob"
   ],
   "dependencies": {
     "arrify": "^1.0.1",
