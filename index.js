@@ -14,7 +14,7 @@ module.exports = (input, opts) => {
 	}
 
 	return Promise.all(arrify(input).map(x => {
-		return pify(fs.stat)(x[0] === '!' ? x.substring(1) : x).then(stats => {
+		return pify(fs.stat)(x[0] === '!' ? x.slice(1) : x).then(stats => {
 			if (stats.isDirectory()) {
 				return path.join(x, '**', opts.ext || '');
 			}
