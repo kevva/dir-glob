@@ -29,6 +29,7 @@
   },
   "devDependencies": {
     "ava": "*",
+    "make-dir": "^1.0.0",
     "mkdirp": "^0.5.1",
     "rimraf": "^2.5.0",
     "xo": "*"

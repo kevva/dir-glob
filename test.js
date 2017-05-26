@@ -1,9 +1,9 @@
-import mkdirp from 'mkdirp';
+import makeDir from 'make-dir';
 import rimraf from 'rimraf';
 import test from 'ava';
-import m from './';
+import m from '.';
 
-test.before(() => mkdirp.sync('tmp'));
+test.before(() => makeDir.sync('tmp'));
 test.after(() => rimraf.sync('tmp'));
 
 test('convert directories to glob - async', async t => {

@@ -40,15 +40,15 @@ Returns a promise for an array of glob strings.
 
 #### input
 
-Type: `array`, `string`
+Type: `Array` `string`
 
-A `string` or an `array` of paths.
+A `string` or an `Array` of paths.
 
 #### options
 
 ##### ext
 
-Type: `array` , `string`
+Type: `Array` `string`
 
 Append extension to the end of your glob.
 
@@ -58,7 +58,7 @@ Returns an array of glob strings.
 
 #### input
 
-Type: `array`, `string`
+Type: `Array` `string`
 
 A `string` or an `array` of paths.
 
@@ -66,7 +66,7 @@ A `string` or an `array` of paths.
 
 ##### ext
 
-Type: `array`, `string`
+Type: `Array` `string`
 
 Append extension to the end of your glob.
 
