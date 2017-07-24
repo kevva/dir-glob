@@ -1,6 +1,6 @@
 {
 	"name": "dir-glob",
-	"version": "1.1.0",
+	"version": "2.0.0",
 	"description": "Convert directories to glob compatible strings",
 	"license": "MIT",
 	"repository": "kevva/dir-glob",
