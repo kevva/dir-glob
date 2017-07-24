@@ -6,7 +6,7 @@
 ## Install
 
 ```
-$ npm install --save dir-glob
+$ npm install dir-glob
 ```
 
 
@@ -20,14 +20,20 @@ dirGlob(['index.js', 'test.js', 'fixtures']).then(files => {
 	//=> ['index.js', 'test.js', 'fixtures/**']
 });
 
-dirGlob(['lib/**', 'fixtures'], {ext: 'js'}).then(files => {
+dirGlob(['lib/**', 'fixtures'], {
+	files: ['test', 'unicorn']
+	extensions: ['js']
+}).then(files => {
 	console.log(files);
-	//=> ['lib/**', 'fixtures/**/*.js']
+	//=> ['lib/**', 'fixtures/**/test.js', 'fixtures/**/unicorn.js']
 });
 
-dirGlob(['lib/**', 'fixtures'], {ext: ['js', 'png']}).then(files => {
+dirGlob(['lib/**', 'fixtures'], {
+	files: ['test', 'unicorn', '*.jsx'],
+	extensions: ['js', 'png']
+}).then(files => {
 	console.log(files);
-	//=> ['lib/**', 'fixtures/**/*.{js,png}']
+	//=> ['lib/**', 'fixtures/**/test.{js,png}', 'fixtures/**/unicorn.{js,png}', 'fixtures/**/*.jsx']
 });
 ```
 
@@ -36,21 +42,7 @@ dirGlob(['lib/**', 'fixtures'], {ext: ['js', 'png']}).then(files => {
 
 ### dirGlob(input, [options])
 
-Returns a promise for an array of glob strings.
-
-#### input
-
-Type: `Array` `string`
-
-A `string` or an `Array` of paths.
-
-#### options
-
-##### ext
-
-Type: `Array` `string`
-
-Append extension to the end of your glob.
+Returns a `Promise` for an array of glob strings.
 
 ### dirGlob.sync(input, [options])
 
@@ -60,17 +52,23 @@ Returns an array of glob strings.
 
 Type: `Array` `string`
 
-A `string` or an `array` of paths.
+A `string` or an `Array` of paths.
 
 #### options
 
-##### ext
+##### extensions
 
-Type: `Array` `string`
+Type: `Array`
 
-Append extension to the end of your glob.
+Append extensions to the end of your globs.
+
+##### files
+
+Type: `Array`
+
+Only glob for certain files.
 
 
 ## License
 
-MIT © [Kevin Martensson](http://github.com/kevva)
+MIT © [Kevin Mårtensson](https://github.com/kevva)
