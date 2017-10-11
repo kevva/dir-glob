@@ -1,6 +1,5 @@
 'use strict';
 const path = require('path');
-const arrify = require('arrify');
 const pathType = require('path-type');
 
 const getExtensions = extensions => extensions.length > 1 ? `{${extensions.join(',')}}` : extensions[0];
@@ -37,12 +36,12 @@ const getGlob = (dir, opts) => {
 };
 
 module.exports = (input, opts) => {
-	return Promise.all(arrify(input).map(x => pathType.dir(getPath(x))
+	return Promise.all([].concat(input).map(x => pathType.dir(getPath(x))
 		.then(isDir => isDir ? getGlob(x, opts) : x)))
 		.then(globs => [].concat.apply([], globs));
 };
 
 module.exports.sync = (input, opts) => {
-	const globs = arrify(input).map(x => pathType.dirSync(getPath(x)) ? getGlob(x, opts) : x);
+	const globs = [].concat(input).map(x => pathType.dirSync(getPath(x)) ? getGlob(x, opts) : x);
 	return [].concat.apply([], globs);
 };

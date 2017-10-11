@@ -7,6 +7,7 @@ test.before(() => makeDir.sync('tmp'));
 test.after(() => del.sync('tmp'));
 
 test('convert directories to glob - async', async t => {
+	t.deepEqual(await m('tmp'), ['tmp/**']);
 	t.deepEqual(await m(['index.js', 'tmp']), ['index.js', 'tmp/**']);
 	t.deepEqual(await m(['index.js', 'tmp'], {extensions: ['js']}), ['index.js', 'tmp/**/*.js']);
 	t.deepEqual(await m(['index.js', 'tmp'], {extensions: ['js', 'png']}), ['index.js', 'tmp/**/*.{js,png}']);
@@ -19,6 +20,7 @@ test('convert directories to glob - async', async t => {
 });
 
 test('convert directories to glob - sync', t => {
+	t.deepEqual(m.sync('tmp'), ['tmp/**']);
 	t.deepEqual(m.sync(['index.js', 'tmp']), ['index.js', 'tmp/**']);
 	t.deepEqual(m.sync(['index.js', 'tmp'], {extensions: ['js']}), ['index.js', 'tmp/**/*.js']);
 	t.deepEqual(m.sync(['index.js', 'tmp'], {extensions: ['js', 'png']}), ['index.js', 'tmp/**/*.{js,png}']);

@@ -26,7 +26,6 @@
 		"glob"
 	],
 	"dependencies": {
-		"arrify": "^1.0.1",
 		"path-type": "^3.0.0"
 	},
 	"devDependencies": {
