@@ -36,12 +36,14 @@ const getGlob = (dir, opts) => {
 };
 
 module.exports = (input, opts) => {
-	return Promise.all([].concat(input).map(x => pathType.dir(getPath(x))
+	const cwd = opts && opts.cwd ? opts.cwd : process.cwd();
+	return Promise.all([].concat(input).map(x => pathType.dir(path.join(cwd, getPath(x)))
 		.then(isDir => isDir ? getGlob(x, opts) : x)))
 		.then(globs => [].concat.apply([], globs));
 };
 
 module.exports.sync = (input, opts) => {
-	const globs = [].concat(input).map(x => pathType.dirSync(getPath(x)) ? getGlob(x, opts) : x);
+	const cwd = opts && opts.cwd ? opts.cwd : process.cwd();
+	const globs = [].concat(input).map(x => pathType.dirSync(path.join(cwd, getPath(x))) ? getGlob(x, opts) : x);
 	return [].concat.apply([], globs);
 };
