@@ -3,7 +3,7 @@ const path = require('path');
 const pathType = require('path-type');
 
 const getExtensions = extensions => extensions.length > 1 ? `{${extensions.join(',')}}` : extensions[0];
-const getPath = filepath => filepath[0] === '!' ? filepath.slice(1) : filepath;
+const getPath = (filepath, cwd) => path.join(cwd, filepath[0] === '!' ? filepath.slice(1) : filepath);
 
 const addExtensions = (file, extensions) => {
 	if (path.extname(file)) {
@@ -14,8 +14,6 @@ const addExtensions = (file, extensions) => {
 };
 
 const getGlob = (dir, opts) => {
-	opts = Object.assign({}, opts);
-
 	if (opts.files && !Array.isArray(opts.files)) {
 		throw new TypeError(`\`options.files\` must be an \`Array\`, not \`${typeof opts.files}\``);
 	}
@@ -36,14 +34,16 @@ const getGlob = (dir, opts) => {
 };
 
 module.exports = (input, opts) => {
-	const cwd = opts && opts.cwd ? opts.cwd : process.cwd();
-	return Promise.all([].concat(input).map(x => pathType.dir(path.join(cwd, getPath(x)))
+	opts = Object.assign({cwd: process.cwd()}, opts);
+
+	return Promise.all([].concat(input).map(x => pathType.dir(getPath(x, opts.cwd))
 		.then(isDir => isDir ? getGlob(x, opts) : x)))
 		.then(globs => [].concat.apply([], globs));
 };
 
 module.exports.sync = (input, opts) => {
-	const cwd = opts && opts.cwd ? opts.cwd : process.cwd();
-	const globs = [].concat(input).map(x => pathType.dirSync(path.join(cwd, getPath(x))) ? getGlob(x, opts) : x);
+	opts = Object.assign({cwd: process.cwd()}, opts);
+
+	const globs = [].concat(input).map(x => pathType.dirSync(getPath(x, opts.cwd)) ? getGlob(x, opts) : x);
 	return [].concat.apply([], globs);
 };
