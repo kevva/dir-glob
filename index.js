@@ -3,7 +3,11 @@ const path = require('path');
 const pathType = require('path-type');
 
 const getExtensions = extensions => extensions.length > 1 ? `{${extensions.join(',')}}` : extensions[0];
-const getPath = (filepath, cwd) => path.join(cwd, filepath[0] === '!' ? filepath.slice(1) : filepath);
+
+const getPath = (filepath, cwd) => {
+	const pth = filepath[0] === '!' ? filepath.slice(1) : filepath;
+	return path.isAbsolute(pth) ? pth : path.join(cwd, pth);
+};
 
 const addExtensions = (file, extensions) => {
 	if (path.extname(file)) {

@@ -20,6 +20,8 @@ test('convert directories to glob - async', async t => {
 	t.deepEqual(await m('inner_tmp', {cwd: 'tmp'}), ['inner_tmp/**']);
 	t.deepEqual(await m(['index.js', 'inner_tmp'], {cwd: 'tmp'}), ['index.js', 'inner_tmp/**']);
 	t.deepEqual(await m(['index.js', 'inner_tmp'], {cwd: 'tmp', files: ['unicorn', '*.png'], extensions: ['js', 'png']}), ['index.js', 'inner_tmp/**/unicorn.{js,png}', 'inner_tmp/**/*.png']);
+	t.deepEqual(await m([__dirname], {extensions: ['js']}), [`${__dirname}/**/*.js`]);
+	t.deepEqual(await m([__dirname], {files: ['*.js']}), [`${__dirname}/**/*.js`]);
 	await t.throws(m(['index.js'], {cwd: undefined}), 'Expected `cwd` to be of type `string` but received type `undefined`');
 });
 
@@ -37,5 +39,7 @@ test('convert directories to glob - sync', t => {
 	t.deepEqual(m.sync('inner_tmp', {cwd: 'tmp'}), ['inner_tmp/**']);
 	t.deepEqual(m.sync(['index.js', 'inner_tmp'], {cwd: 'tmp'}), ['index.js', 'inner_tmp/**']);
 	t.deepEqual(m.sync(['index.js', 'inner_tmp'], {cwd: 'tmp', files: ['unicorn', '*.png'], extensions: ['js', 'png']}), ['index.js', 'inner_tmp/**/unicorn.{js,png}', 'inner_tmp/**/*.png']);
+	t.deepEqual(m.sync([__dirname], {extensions: ['js']}), [`${__dirname}/**/*.js`]);
+	t.deepEqual(m.sync([__dirname], {files: ['*.js']}), [`${__dirname}/**/*.js`]);
 	t.throws(() => m.sync(['index.js'], {cwd: undefined}), 'Expected `cwd` to be of type `string` but received type `undefined`');
 });
