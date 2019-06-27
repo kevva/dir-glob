@@ -6,7 +6,7 @@ const getExtensions = extensions => extensions.length > 1 ? `{${extensions.join(
 
 const getPath = (filepath, cwd) => {
 	const pth = filepath[0] === '!' ? filepath.slice(1) : filepath;
-	return path.isAbsolute(pth) ? pth : path.join(cwd, pth);
+	return path.isAbsolute(pth) ? pth : path.posix.join(cwd, pth);
 };
 
 const addExtensions = (file, extensions) => {
@@ -27,18 +27,18 @@ const getGlob = (dir, opts) => {
 	}
 
 	if (opts.files && opts.extensions) {
-		return opts.files.map(x => path.join(dir, addExtensions(x, opts.extensions)));
+		return opts.files.map(x => path.posix.join(dir, addExtensions(x, opts.extensions)));
 	}
 
 	if (opts.files) {
-		return opts.files.map(x => path.join(dir, `**/${x}`));
+		return opts.files.map(x => path.posix.join(dir, `**/${x}`));
 	}
 
 	if (opts.extensions) {
-		return [path.join(dir, `**/*.${getExtensions(opts.extensions)}`)];
+		return [path.posix.join(dir, `**/*.${getExtensions(opts.extensions)}`)];
 	}
 
-	return [path.join(dir, '**')];
+	return [path.posix.join(dir, '**')];
 };
 
 module.exports = (input, opts) => {
