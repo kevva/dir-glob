@@ -6,7 +6,7 @@ const getExtensions = extensions => extensions.length > 1 ? `{${extensions.join(
 
 const getPath = (filepath, cwd) => {
 	const pth = filepath[0] === '!' ? filepath.slice(1) : filepath;
-	return path.isAbsolute(pth) ? pth : path.posix.join(cwd, pth);
+	return path.isAbsolute(pth) ? pth : path.join(cwd, pth);
 };
 
 const addExtensions = (file, extensions) => {
