@@ -56,7 +56,7 @@ module.exports = async (input, options) => {
 		return isDirectory ? getGlob(x, options) : x;
 	}));
 
-	return [].concat.apply([], globs); // eslint-disable-line prefer-spread
+	return [].concat(...globs);
 };
 
 module.exports.sync = (input, options) => {
@@ -71,5 +71,5 @@ module.exports.sync = (input, options) => {
 
 	const globs = [].concat(input).map(x => pathType.isDirectorySync(getPath(x, options.cwd)) ? getGlob(x, options) : x);
 
-	return [].concat.apply([], globs); // eslint-disable-line prefer-spread
+	return [].concat(...globs);
 };
